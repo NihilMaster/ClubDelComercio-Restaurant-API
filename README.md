@@ -1,9 +1,9 @@
 ## RestaurantCC - Microservicios
 
 Proyecto padre con módulos:
-- `ms_administrator`
-- `ms_orders`
-- `ms_apigateway`
+- `ms_administrator` (puerto 8081)
+- `ms_orders` (puerto 8082)
+- `ms_apigateway` (puerto 8080)
 
 ### Estructura de cada microservicio (hexagonal)
 
@@ -25,30 +25,32 @@ src/main/java/org/mt/<ms>/
 ### Requisitos
 
 - JDK 17
-- PostgreSQL (o Docker) con base de datos `restaurant_admin` (para administrator)
+- PostgreSQL
 
 ### Configuración en IntelliJ
 
-Para cada módulo crear una configuración de tipo `Application`:
+Por cada módulo crear configuración `Application`:
 
 | Campo | Valor |
 |-------|-------|
+| Name | `ms_administrator` / `ms_orders` / `ms_apigateway` |
 | Main class | `org.mt.<ms>.<Ms>Application` |
 | Working directory | `$PROJECT_DIR$` |
 | Module classpath | `<ms>.main` |
 | Allow parallel run | ✔ |
 
-Ejemplo para `ms_administrator`:
-- Nombre: `ms_administrator`
-- Main class: `org.mt.ms_administrator.MsAdministratorApplication`
-- Module classpath: `ms_administrator.main`
+**Variables de entorno** (formato: `CLAVE=valor;CLAVE2=valor2`):
+```
+DB_USERNAME=postgres;DB_PASSWORD=postgres;DB_HOST=localhost;DB_PORT=5432;DB_NAME=restaurant_admin
+```
+(Ajustar según módulo: `restaurant_admin` para administrator, `restaurant_orders` para orders)
 
 ### Ejecución
 
 #### Con IntelliJ
-Seleccionar la configuración deseada y ejecutar (Run / Debug).
+Seleccionar configuración y ejecutar.
 
-#### Con Gradle (desde la raíz del proyecto)
+#### Con Gradle
 ```bash
 ./gradlew :ms_administrator:bootRun
 ./gradlew :ms_orders:bootRun
@@ -58,15 +60,22 @@ Seleccionar la configuración deseada y ejecutar (Run / Debug).
 ### Endpoints de prueba
 
 - **ms_administrator** (puerto 8081)  
-  `GET /api/test/greeting` → respuesta: texto plano  
-  Swagger UI: `http://localhost:8081/api/swagger-ui.html`
+  `GET /api/test/greeting` → texto plano  
+  Swagger UI: `http://localhost:8081/api/swagger-ui.html`  
+  Actuator: `http://localhost:8081/api/actuator/health`
 
 - **ms_apigateway** (puerto 8080)  
   *pendiente de configuración de rutas*
 
-### Verificación rápida
+### Verificación
 
 ```bash
+# Endpoint de prueba
 curl http://localhost:8081/api/test/greeting
-# "¡Hola desde Arquitectura Hexagonal con WebFlux!"
+
+# Health check
+curl http://localhost:8081/api/actuator/health
+
+# OpenAPI spec
+curl http://localhost:8081/api/v3/api-docs
 ```
