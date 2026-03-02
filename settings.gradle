@@ -1,1 +1,5 @@
 rootProject.name = 'RestaurantCC'
+
+include 'ms_administrator'
+include 'ms_orders'
+include 'ms_APIGateway'

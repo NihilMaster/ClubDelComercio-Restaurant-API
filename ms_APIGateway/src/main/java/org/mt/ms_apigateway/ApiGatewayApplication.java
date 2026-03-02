@@ -1,13 +1,13 @@
-package org.mt.restaurantcc;
+package org.mt.ms_apigateway;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class RestaurantCcApplication {
+public class ApiGatewayApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(RestaurantCcApplication.class, args);
+        SpringApplication.run(ApiGatewayApplication.class, args);
     }
 
 }
