@@ -29,7 +29,11 @@ src/main/java/org/mt/<ms>/
 
 ### Configuración en IntelliJ
 
-Por cada módulo crear configuración `Application`:
+Para ejecutar todos los microservicios simultáneamente sin conflictos de puertos, configura cada módulo como una **Application** dentro del panel **Services**.
+
+1. Abrir la ventana **Services** (`Alt + 8`).
+2. Hacer clic en **Add Service** → **Run Configuration Type** → **Application**.
+3. Crear **tres configuraciones independientes** (una por cada microservicio) con los siguientes valores:
 
 | Campo | Valor |
 |-------|-------|
@@ -44,13 +48,19 @@ Por cada módulo crear configuración `Application`:
 DB_USERNAME=<postgres>;DB_PASSWORD=<postgres>;DB_HOST=<localhost>;DB_PORT=<5432>;DB_NAME=<restaurant-db>
 ```
 
+Una vez creadas, las tres configuraciones aparecerán agrupadas bajo un nodo llamado **Application** en la ventana Services.
+
 ### Ejecución
 
-#### Con IntelliJ
-Seleccionar configuración y ejecutar.
+#### Desde IntelliJ (recomendado)
+1. Abrir `View → Tool Windows → Services` (`Alt + 8`).
+2. En el árbol, localizar el grupo **Application** (el nodo padre que contiene las tres configuraciones).
+3. Seleccionar el grupo **Application** y hacer clic en el botón **Run** (▶) para iniciar **todos los microservicios a la vez**.
+  - También puedes ejecutar microservicios individualmente haciendo clic sobre cada configuración hija, pero para el funcionamiento completo del sistema es preferible lanzar el grupo completo.
 
-#### Con Gradle
+#### Desde terminal con Gradle
 ```bash
+# Iniciar cada microservicio en terminales separadas
 ./gradlew :ms_administrator:bootRun
 ./gradlew :ms_orders:bootRun
 ./gradlew :ms_apigateway:bootRun
