@@ -28,3 +28,7 @@ springdoc:
     enabled: true
     url: /v3/api-docs
     disable-swagger-default-url: true
+
+logging:
+  level:
+    io.r2dbc.postgresql: DEBUG  # Para ver queries en dev
